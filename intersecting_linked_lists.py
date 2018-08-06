@@ -43,11 +43,27 @@ def find_intersection(ll_a, ll_b):
     cache = {}
 
     for node in ll_a:
-        cache[node.get_value()] = 1
+        cache[node.get_value()] = node
 
     for node in ll_b:
         if node.get_value() in cache:
-            return node
+            temp = node
+
+            if temp.next is None and cache[temp.get_value()].next is None:
+                return node
+
+            def helper(temp):
+                while temp.next:
+                    if temp.next.get_value() == cache[temp.get_value()].next.get_value():
+                        temp = temp.next
+                    else:
+                        return None
+
+                return node
+
+            result = helper(temp)
+            if result:
+                return result
 
     return "These linked lists do not intersect."
 
@@ -64,5 +80,14 @@ if __name__ == '__main__':
 
     # Tests two linked lists that intersect somewhere in the middle.
     ll_a = LinkedList([3,7,8,10])
-    ll_b = LinkedList([99, 1, 8, 10])
+    ll_b = LinkedList([99,1,8,10])
     print(find_intersection(ll_a, ll_b))
+
+    # Tests two linked lists that have matching values at some point prior to
+    # their intersecting nodes.
+    ll_a = LinkedList([3,7,2,8,10])
+    ll_b = LinkedList([99,1,7,8,10])
+    print(find_intersection(ll_a, ll_b))
+
+
+
