@@ -1,5 +1,3 @@
-from __future__ import print_function
-
 def dp_num_decodings(digits):
     n = len(digits) + 1
     dp = [0] * n
