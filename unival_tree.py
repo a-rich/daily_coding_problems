@@ -6,7 +6,7 @@ def num_unival_trees(node):
 
     return count[0]
 
-def num_unival_subtrees(node, count=0):
+def num_unival_subtrees(node, count):
     if node is None:
         return True
 
@@ -38,4 +38,5 @@ if __name__ == '__main__':
     bt.root.right.left.right = Node(1)
 
     assert num_unival_trees(bt.root) == 5
+
 
