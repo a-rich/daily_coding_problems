@@ -2,16 +2,16 @@ from BinaryTree import BinaryTree, Node
 
 def num_unival_trees(node):
     count = [0]
-    num_unival_subtrees(node, count)
+    helper(node, count)
 
     return count[0]
 
-def num_unival_subtrees(node, count):
+def helper(node, count):
     if node is None:
         return True
 
-    left = num_unival_subtrees(node.left, count)
-    right = num_unival_subtrees(node.right, count)
+    left = helper(node.left, count)
+    right = helper(node.right, count)
 
     if left == False or right == False:
         return False
