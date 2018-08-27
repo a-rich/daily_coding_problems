@@ -1,5 +1,20 @@
 import time
+import math
+import numpy as np
+from copy import deepcopy
 from random import randint
+import matplotlib.pyplot as plt
+
+def plot_board(board):
+    new_board = deepcopy(board)
+    for i,row in enumerate(board):
+        for j,cell in enumerate(row):
+            if cell == '*':
+                new_board[i][j] = 1
+            else:
+                new_board[i][j] = 0
+
+    return new_board
 
 def print_board(board):
     '''Print the matrix of the board state centered around the live cells.'''
@@ -65,29 +80,48 @@ def start_life(state, steps):
 
         return state
 
+    plt.tick_params(
+    axis='both',
+    which='both',
+    left=False,
+    right=False,
+    bottom=False,
+    top=False,
+    labelleft=False,
+    labelbottom=False)
+
     start_steps = steps
     while steps:
-        time.sleep(1)
         board = create_board(state)
 
         if not board:
             print('GAME OVER')
-            break
 
         print('Step {}:'.format(start_steps - steps + 1))
-        print_board(board)
+        #print_board(board)
+        #time.sleep(0.5)
+        new_board = plot_board(board)
+        if steps == start_steps:
+            img = plt.imshow(np.array(new_board), vmin=0, vmax=1)
+        else:
+            img.set_data(new_board)
+        plt.pause(0.5)
         state = update(state)
         steps -= 1
 
+    plt.show(block=False)
+    plt.close('all')
+    print('GAME OVER')
+
 if __name__ == '__main__':
-    steps = 10     # Number of steps for Conway's Game of Life
-    num_live = 50  # Number of live cells to begin with.
-    max_board_size = int(num_live/4) if int(num_live/4) > 4 else 5
+    steps = 20 # Number of steps for Conway's Game of Life
+    n = 200    # Number of live cells to begin with.
+    max_size = math.ceil(math.sqrt(n)) + int(n/50)
 
     # Initialize the state of the board with random live cells.
     state = []
-    while len(state) < num_live:
-        coord = (randint(0, max_board_size), randint(0, max_board_size))
+    while len(state) < n:
+        coord = (randint(0, max_size), randint(0, max_size))
         if coord not in state:
             state.append(coord)
 
