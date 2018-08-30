@@ -1,20 +1,41 @@
 from __future__ import print_function
 
+class Node:
+    def __init__(self, val=None):
+        self.data = val
+        self.next = None
+
+
 class Stack:
     def __init__(self):
-        self.stack = []
+        self.stack = None
 
     def push(self, val):
-        self.stack.insert(0, val)
+        if not self.stack:
+            self.stack = Node(val)
+            return
+
+        node = Node(val)
+        node.next = self.stack
+        self.stack = node
 
     def pop(self):
-        return self.stack.pop(0)
+        val = self.stack.data
+        self.stack = self.stack.next
+        return val
 
     def max(self):
-        try:
-            return max(self.stack)
-        except ValueError:
+        if not self.stack:
             return None
+
+        max_ = float('-inf')
+        current = self.stack
+        while current.next:
+            if current.data > max_:
+                max_ = current.data
+            current = current.next
+        return max_
+
 
 if __name__ == '__main__':
     s = Stack()
