@@ -1,5 +1,3 @@
-from __future__ import print_function
-
 def naive_profit(prices):
     max_profit = float('-inf')
     for i, price in enumerate(prices):
