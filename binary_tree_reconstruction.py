@@ -1,6 +1,5 @@
-from __future__ import print_function
-
 class Node:
+
     def __init__(self, val, left, right):
         self.data = val
         self.left = left
@@ -54,3 +53,4 @@ if __name__ == '__main__':
     tree_2 = reconstruct_tree(preorder, inorder)
 
     assert tree_equal(tree_1, tree_2)
+
